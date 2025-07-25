@@ -1,0 +1,28 @@
+name: Deploy Tandoor to Azure
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  RESOURCE_GROUP: tandoor-rg
+  CONTAINER_APP_NAME: tandoor-app
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Log in to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+    - name: Deploy to Container Apps
+      run: |
+        az containerapp update \
+          --name $CONTAINER_APP_NAME \
+          --resource-group $RESOURCE_GROUP \
+          --image vabene1111/recipes:latest

@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  web_recipes:
+    environment:
+      - DEBUG=1
+      - POSTGRES_HOST=db_recipes
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./staticfiles:/opt/recipes/staticfiles
+      - ./mediafiles:/opt/recipes/mediafiles
